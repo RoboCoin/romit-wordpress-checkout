@@ -1,0 +1,3 @@
+rm romit-wordpress-checkout.zip 2> /dev/null
+zip -r ./romit-wordpress-checkout.zip ./romit-checkout-page.php
+git add romit-wordpress-checkout.zip
