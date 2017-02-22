@@ -1,15 +1,15 @@
 <?php
 /*
- * Plugin Name: Romit Checkout Page
- * Description: Receive payments using Romit's checkout page
- * Author: romit.io
+ * Plugin Name: Enter Checkout Page
+ * Description: Receive payments using Enter's checkout page
+ * Author: enter.financial
  * Version: 1.2.1
 */
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) )
 {
-    function initRomitCheckoutPage()
+    function initEnterCheckoutPage()
     {
-        class RomitCheckoutPageGateway extends WC_Payment_Gateway
+        class EnterCheckoutPageGateway extends WC_Payment_Gateway
         {
             private static $logger = null;
 
@@ -294,8 +294,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
                 $isProduction = ($this->settings['production'] == 'yes');
 
                 $baseUrl = (($isProduction)
-                    ? 'https://checkout.romit.io/payment-page'
-                    : 'https://checkout.sandbox.romit.io/payment-page');
+                    ? 'https://checkout.enter.financial/payment-page'
+                    : 'https://checkout.sandbox.enter.financial/payment-page');
 
                 $vendorId = $this->settings['vendor_id'];
 
@@ -338,17 +338,17 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
                     self::$logger = new WC_Logger();
                 }
 
-                self::$logger->add('romit', $message);
+                self::$logger->add('enter', $message);
             }
 
             public function __construct()
             {
-                $this->id = 'romit_checkout_page';
-                $this->icon = 'https://checkout.sandbox.romit.io/app/img/romit_button_new.png';
+                $this->id = 'enter_checkout_page';
+                $this->icon = 'https://checkout.sandbox.enter.financial/app/img/romit_button_new.png';
                 $this->has_fields = false;
-                $this->method_title = __('Romit Checkout Page', 'romit_checkout_page');
-                $this->method_description = __('Use a payment form hosted on wallet.romit.io', 'romit_checkout_page');
-                $this->order_button_text = __('Proceed to Romit', 'romit_checkout_page');
+                $this->method_title = __('Enter Checkout Page', 'enter_checkout_page');
+                $this->method_description = __('Use a payment form hosted on wallet.enter.financial', 'enter_checkout_page');
+                $this->order_button_text = __('Proceed to Enter', 'enter_checkout_page');
 
                 $this->init_form_fields();
                 $this->init_settings();
@@ -363,47 +363,47 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
             {
                 $this->form_fields = array(
                     'enabled' => array(
-                        'title' => __('Enable/Disable', 'romit_checkout_page'),
+                        'title' => __('Enable/Disable', 'enter_checkout_page'),
                         'type' => 'checkbox',
-                        'label' => __('Enable Romit Payment Page', 'romit_checkout_page'),
+                        'label' => __('Enable Enter Payment Page', 'enter_checkout_page'),
                         'default' => 'yes'
                     ),
                     'production' => array(
-                        'title' => __('Production?', 'romit_checkout_page'),
+                        'title' => __('Production?', 'enter_checkout_page'),
                         'type' => 'checkbox',
-                        'label' => __('Enable Production Romit Payment Page, otherwise Sandbox', 'romit_checkout_page'),
+                        'label' => __('Enable Production Enter Payment Page, otherwise Sandbox', 'enter_checkout_page'),
                         'default' => 'no'
                     ),
                     'title' => array(
-                        'title' => __('Title', 'romit_checkout_page'),
+                        'title' => __('Title', 'enter_checkout_page'),
                         'type' => 'text',
-                        'description' => __('This controls the title which the user sees during checkout.', 'romit_checkout_page'),
-                        'default' => __('Romit Checkout Page', 'romit_checkout_page'),
+                        'description' => __('This controls the title which the user sees during checkout.', 'enter_checkout_page'),
+                        'default' => __('Enter Checkout Page', 'enter_checkout_page'),
                         'desc_tip' => true
                     ),
                     'description' => array(
-                        'title' => __('Customer Message', 'romit_checkout_page'),
+                        'title' => __('Customer Message', 'enter_checkout_page'),
                         'type' => 'textarea',
                         'default' => ''
                     ),
                     'vendor_id' => array(
-                        'title' => __('Checkout ID', 'romit_checkout_page'),
+                        'title' => __('Checkout ID', 'enter_checkout_page'),
                         'type' => 'text',
                         'desc_tip' => true,
-                        'description' => __('This is your Checkout ID from Tools -> Edit Checkout configuration', 'romit_checkout_page')
+                        'description' => __('This is your Checkout ID from Tools -> Edit Checkout configuration', 'enter_checkout_page')
                     ),
                     'callback_secret' => array(
-                        'title' => __('Callback Secret', 'romit_checkout_page'),
+                        'title' => __('Callback Secret', 'enter_checkout_page'),
                         'type' => 'text',
                         'desc_tip' => true,
-                        'description' => __('This is is the secret we\'ll use to verify that a callback came from Romit', 'romit_checkout_page')
+                        'description' => __('This is is the secret we\'ll use to verify that a callback came from Enter', 'enter_checkout_page')
                     )
                 );
             }
 
             public function admin_options()
             {
-                ?><h2><?php _e('Romit Checkout Page', 'romit_checkout_page'); ?></h2>
+                ?><h2><?php _e('Enter Checkout Page', 'enter_checkout_page'); ?></h2>
                 <table class="form-table">
                 <?php $this->generate_settings_html(); ?>
                 </table><?php
@@ -437,7 +437,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
                 if (isset($postBody['statusType']))
                 {
                     $order = new WC_Order($postBody['sourceMessage']);
-                    $order->add_order_note('Romit transfer ID: ' . $postBody['paymentId']);
+                    $order->add_order_note('Enter transfer ID: ' . $postBody['paymentId']);
                     switch ($postBody['statusType'])
                     {
                         case 'EXECUTED':
@@ -480,12 +480,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
         }
     }
 
-    function addRomitCheckoutPageGatewayClass($methods)
+    function addEnterCheckoutPageGatewayClass($methods)
     {
-        $methods[] = 'RomitCheckoutPageGateway';
+        $methods[] = 'EnterCheckoutPageGateway';
         return $methods;
     }
 
-    add_action('plugins_loaded', 'initRomitCheckoutPage');
-    add_filter('woocommerce_payment_gateways', 'addRomitCheckoutPageGatewayClass');
+    add_action('plugins_loaded', 'initEnterCheckoutPage');
+    add_filter('woocommerce_payment_gateways', 'addEnterCheckoutPageGatewayClass');
 }
