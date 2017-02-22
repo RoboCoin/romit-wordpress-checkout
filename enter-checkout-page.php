@@ -3,7 +3,7 @@
  * Plugin Name: Enter Checkout Page
  * Description: Receive payments using Enter's checkout page
  * Author: enter.financial
- * Version: 1.2.1
+ * Version: 1.2.2
 */
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) )
 {
